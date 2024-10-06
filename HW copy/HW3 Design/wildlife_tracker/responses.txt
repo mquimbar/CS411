@@ -1,0 +1,25 @@
+Agile - GiggleGit:
+1.
+    User story 1: As a vanilla git power-user that has never seen GiggleGit before, I want GiggleGit to be simple so I can merge efficiently and quickly.
+    User story 2: As a team lead onboarding an experienced GiggleGit user, I want to ensure GiggleGit is entertaining so users return.
+2.
+    User story 3: As a non-experienced git user that has never seen GiggleGit before, I want to make sure GiggleGit is easy to use so I can learn how to use it quickly.
+        Task: Implement easy-to-follow instructions/tutorials
+            Ticket 1: Make important features easy to find
+                * Need to make sure that important feautures are highlighted and emphasized
+            Ticket 2: Implement a step-by-step follow-through tutorial
+                * Create a tutorial where new users can follow along and be shown the most important parts of GiggleGit
+3. User stories need to have a benefit, whereas this only has something that the user wants to do. This is instead a non functional requirement.
+
+Formal Requirements - SnickerSync: 
+1.
+    Goal: Create an easy to use program that continues to make syncing easy but adds a little fun to it.
+    Non-goal: Efficiently add a fun snicker to every sync.
+2.
+    Non-functional Requirement 1: Security
+        Functional Requirement 1: Securely sync between branches, ensure syncing is done between them only
+        Functional Requirement 2: Ensure syncing is done correctly, ensure changes are being synced accurately
+    Non-functional Requirement 2: Versatility
+        Functional Requirement 1: Each sync will have a different snicker
+        Functional Requirement 2: There is a variety of snickers that can be used
+
