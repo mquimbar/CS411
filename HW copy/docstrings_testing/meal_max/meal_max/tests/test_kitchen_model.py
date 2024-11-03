@@ -254,28 +254,6 @@ def test_get_leaderboard(mock_cursor):
 
     assert actual_query == expected_query, "The SQL query did not match the expected structure."
 
-#def test_get_leaderboard_empty_database(mock_cursor, caplog): # might not need this one???? because no error when empty
- #   """Test that retrieving all meals returns an empty list when the databse is empty and logs a warning."""
-
-    # Simulate that the database is empty (no meals)
-  #  mock_cursor.fetchall.return_value = []
-
-    # Call the get_leaderboard function
-  #  result = get_leaderboard()
-
-    # Ensure the result is an empty list
-  #  assert result == [], f"Expected empty list, but got {result}"
-
-    # Ensure that a warning was logged
-  #  assert "The meal databse is empty." in caplog.text, "Expected warning about empty database not found in logs."
-
-    # Ensure the SQL query was executed correctly
-  #  expected_query = normalize_whitespace("SELECT id, meal, cuisine, price, difficulty, battles, wins FROM meals WHERE deleted = FALSE") # *** may or may not need the battles part
-  #  actual_query = normalize_whitespace(mock_cursor.execute.call_args[0][0])
-
-    # Assert that the SQL query was correct
-  #  assert actual_query == expected_query, "The SQL query did not match the expected structure."
-
 def test_get_leaderboard_ordered_by_wins(mock_cursor):
     """Test retrieving all meals ordered by wins."""
 
