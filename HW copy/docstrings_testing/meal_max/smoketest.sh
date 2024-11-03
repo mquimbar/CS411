@@ -70,3 +70,16 @@ create_meal() {
     exit 1
   fi
 }
+
+delete_meal_by_id() {
+  meal_id=$1
+
+  echo "Deleting meal by ID ($meal_id)..."
+  response=$(curl -s -X DELETE "$BASE_URL/delete-meal/$meal_id")
+  if echo "$response" | grep -q '"status": "success"'; then
+    echo "Meal deleted successfully by ID ($meal_id)."
+  else
+    echo "Failed to delete meal by ID ($meal_id)."
+    exit 1
+  fi
+}
