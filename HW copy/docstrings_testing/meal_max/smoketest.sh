@@ -155,3 +155,66 @@ get_meal_leaderboard_win_pct() {
 #
 ###############################################
 
+prep_combatant() {
+  meal_id=$1
+  echo "Preparing combatant with meal ID ($meal_id) for battle..."
+  response=$(curl -s -X POST "$BASE_URL/prep-combatant" -H "Content-Type: application/json" \
+    -d "{\"meal_id\": \"$meal_id\"}")
+
+  if echo "$response" | grep -q '"status": "success"'; then
+    echo "Combatant prepared successfully with meal ID ($meal_id)."
+    if [ "$ECHO_JSON" = true ]; then
+      echo "Combatant JSON (ID $meal_id):"
+      echo "$response" | jq .
+    fi
+  else
+    echo "Failed to prepare combatant with meal ID ($meal_id)."
+    exit 1
+  fi
+}
+
+# Starts a battle between combatants
+start_battle() {
+  echo "Starting a battle between prepared combatants..."
+  response=$(curl -s -X POST "$BASE_URL/start-battle")
+
+  if echo "$response" | grep -q '"status": "success"'; then
+    echo "Battle started successfully."
+    if [ "$ECHO_JSON" = true ]; then
+      echo "Battle Result JSON:"
+      echo "$response" | jq .
+    fi
+  else
+    echo "Failed to start battle."
+    exit 1
+  fi
+}
+
+clear_combatants() {
+  echo "Clearing all combatants..."
+  response=$(curl -s -X POST "$BASE_URL/clear-combatants")
+
+  if echo "$response" | grep -q '"status": "success"'; then
+    echo "Combatants cleared successfully."
+  else
+    echo "Failed to clear combatants."
+    exit 1
+  fi
+}
+
+# Test adding more than two combatants
+test_combatant_overflow() {
+  meal_id=$1
+
+  echo "Attempting to add a third combatant (meal ID $meal_id)..."
+  response=$(curl -s -X POST "$BASE_URL/prep-combatant" -H "Content-Type: application/json" \
+    -d "{\"meal_id\": \"$meal_id\"}")
+
+  if echo "$response" | grep -q '"status": "error"' && echo "$response" | grep -q "Combatant list is full"; then
+    echo "Correctly handled error for combatant overflow."
+  else
+    echo "Failed: was able to add more than two combatants. "
+    exit 1
+  fi
+
+}
