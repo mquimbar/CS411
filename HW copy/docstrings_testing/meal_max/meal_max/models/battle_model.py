@@ -29,7 +29,7 @@ class BattleModel:
         Starts the battle and declares a winner.
 
         Returns:
-            The winner. It is a string of the meal that won.
+            str: The winner, the meal that won.
 
         Raises:
             ValueError: If there are less than two combatants ready for battle.
@@ -102,7 +102,7 @@ class BattleModel:
             combatant (Meal class): The combatant whose score wants to be calculated.
         
         Returns:
-            The score (float) representing the score of the combatant.
+            float: The score representing the score of the combatant.
             
         """
         difficulty_modifier = {"HIGH": 1, "MED": 2, "LOW": 3}
@@ -124,7 +124,7 @@ class BattleModel:
         Gets the list of current combatants.
   
         Returns:
-            The list of current combatants (List[Meal]).
+            List[Meal]: The list of current combatants.
             
         """
         logger.info("Retrieving current list of combatants.")

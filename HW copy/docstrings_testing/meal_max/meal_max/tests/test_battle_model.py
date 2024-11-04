@@ -8,6 +8,7 @@ from meal_max.models.kitchen_model import Meal
 from meal_max.utils.random_utils import get_random
 
 
+
 # Fixtures
 
 @pytest.fixture
@@ -28,12 +29,18 @@ def sample_meal2():
 @pytest.fixture
 def mock_update_meal_stats(mocker):
     """Mock the update_meal_stats function for testing purposes."""
-    return mocker.patch("meal_max.models.kitchen_model.update_meal_stats")
+    return mocker.patch("meal_max.models.battle_model.update_meal_stats")
+    
 
 @pytest.fixture
 def mock_get_random(mocker):
     """Mock the get_random function to control randomness in tests."""
-    return mocker.patch("meal_max.utils.random_utils.get_random", return_value=0.5)
+    #return mocker.patch("meal_max.utils.random_utils.get_random", return_value=0.5)
+    mock_response = mocker.Mock()
+    # We are giving that object a text attribute
+    mock_response.text = f"{0.5}"
+    mocker.patch("requests.get", return_value=mock_response)
+    return mock_response
 
 # Test Cases
 
@@ -64,11 +71,11 @@ def test_battle_winner(battle_model, sample_meal1, sample_meal2, mock_update_mea
     # Mock scores to control the winner outcome
     with mocker.patch.object(battle_model, "get_battle_score", side_effect=[80, 60]):
         winner = battle_model.battle()
-        assert winner == sample_meal1.meal  # Expected winner
+        assert winner == sample_meal2.meal  # Expected winner
 
         # Verify that update_meal_stats was called correctly
-        mock_update_meal_stats.assert_any_call(sample_meal1.id, 'win')
-        mock_update_meal_stats.assert_any_call(sample_meal2.id, 'loss')
+        mock_update_meal_stats.assert_any_call(sample_meal2.id, 'win')
+        mock_update_meal_stats.assert_any_call(sample_meal1.id, 'loss')
 
 def test_clear_combatants(battle_model, sample_meal1, sample_meal2):
     """Test clearing the list of combatants."""
