@@ -99,7 +99,7 @@ class BattleModel:
         Gets the score of the specified combatant in battle.
 
         Args:
-            combatant (Meal class): The combatant whose score wants to be calculated.
+            combatant (Meal): The combatant whose score wants to be calculated.
         
         Returns:
             float: The score representing the score of the combatant.
@@ -135,7 +135,7 @@ class BattleModel:
         Adds combatants to the battle.
 
         Args:
-            combatant_data (Meal class): the data of the combatant that wants to be added.
+            combatant_data (Meal): the data of the combatant that wants to be added.
         
         Raises:
             ValueError: If the list of combatants is full, that is if there are currently two or more combatants.
