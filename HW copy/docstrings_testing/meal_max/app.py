@@ -206,6 +206,23 @@ def battle() -> Response:
         app.logger.error(f"Battle error: {e}")
         return make_response(jsonify({'error': str(e)}), 500)
 
+@app.route('/api/clear-meals', methods=['DELETE'])
+def clear_catalog() -> Response:
+    """
+    Route to clear all meals (recreates the table).
+
+    Returns:
+        JSON response indicating success of the operation or error message.
+    """
+    try:
+        app.logger.info("Clearing the meals")
+        kitchen_model.clear_meals()
+        return make_response(jsonify({'status': 'success'}), 200)
+    except Exception as e:
+        app.logger.error(f"Error clearing catalog: {e}")
+        return make_response(jsonify({'error': str(e)}), 500)
+
+
 @app.route('/api/clear-combatants', methods=['POST'])
 def clear_combatants() -> Response:
     """

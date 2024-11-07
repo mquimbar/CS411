@@ -11,7 +11,8 @@ from meal_max.models.kitchen_model import (
     get_leaderboard,
     get_meal_by_id,
     get_meal_by_name,
-    update_meal_stats
+    update_meal_stats,
+    clear_meals
 )
 
 ######################################################
@@ -152,9 +153,35 @@ def test_delete_meal_already_deleted(mock_cursor):
     with pytest.raises(ValueError, match="Meal with ID 999 has been deleted"):
         delete_meal(999)
 
+def test_clear_meals(mock_cursor, mocker):
+    """Test clearing all meals from the database."""
+    
+    mock_create_table_script = """
+    DROP TABLE IF EXISTS meals;
+    CREATE TABLE meals (
+        id INTEGER PRIMARY KEY,
+        name TEXT NOT NULL UNIQUE,
+        cuisine TEXT NOT NULL,
+        price REAL NOT NULL,
+        difficulty TEXT NOT NULL,
+        deleted BOOLEAN DEFAULT FALSE,
+        battles INTEGER DEFAULT 0,
+        wins INTEGER DEFAULT 0
+    );
+    """
+    
+    mock_file = mocker.mock_open(read_data=mock_create_table_script)
+    mocker.patch("builtins.open", mock_file)
+    
+    clear_meals()
+
+    mock_cursor.executescript.assert_called_once_with(mock_create_table_script)
+    assert mock_cursor.connection.commit.call_count == 0
+
+
 ######################################################
 #
-#    Get Song
+#    Get Meal
 #
 ######################################################
 
