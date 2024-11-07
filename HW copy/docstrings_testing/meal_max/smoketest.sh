@@ -132,6 +132,21 @@ get_meal_leaderboard_wins() {
   fi
 }
 
+get_meal_leaderboard_win_pct() {
+  echo "Getting meal leaderboard sorted by (wins)..."
+  response=$(curl -s -X GET "$BASE_URL/leaderboard")
+  if echo "$response" | grep -q '"status": "success"'; then
+    echo "Meal leaderboard retrieved successfully."
+    if [ "$ECHO_JSON" = true ]; then
+      echo "Leaderboard JSON (sorted by win_pct):"
+      echo "$response" | jq .
+    fi
+  else
+    echo "Failed to get meal leaderboard."
+    exit 1
+  fi
+}
+
 ###############################################
 #
 # Battle Management
@@ -258,6 +273,7 @@ get_combatants
 start_battle
 
 get_meal_leaderboard_wins
+get_meal_leaderboard_win_pct
 
 clear_combatants
 
